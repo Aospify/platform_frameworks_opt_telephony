@@ -321,10 +321,8 @@ public class DataConnection extends StateMachine {
     static final int EVENT_NR_STATE_CHANGED = BASE + 27;
     static final int EVENT_DATA_CONNECTION_METEREDNESS_CHANGED = BASE + 28;
     static final int EVENT_NR_FREQUENCY_CHANGED = BASE + 29;
-	protected static final int EVENT_RETRY_CONNECTION = BASE + 27;
 	
-    private static final int CMD_TO_STRING_COUNT =
-            EVENT_RETRY_CONNECTION - BASE + 1;
+    private static final int CMD_TO_STRING_COUNT = EVENT_NR_FREQUENCY_CHANGED - BASE + 1;
 
     private static String[] sCmdToString = new String[CMD_TO_STRING_COUNT];
     static {
@@ -364,7 +362,6 @@ public class DataConnection extends StateMachine {
         sCmdToString[EVENT_DATA_CONNECTION_METEREDNESS_CHANGED - BASE] =
                 "EVENT_DATA_CONNECTION_METEREDNESS_CHANGED";
         sCmdToString[EVENT_NR_FREQUENCY_CHANGED - BASE] = "EVENT_NR_FREQUENCY_CHANGED";
-        sCmdToString[EVENT_RETRY_CONNECTION - BASE] = "EVENT_RETRY_CONNECTION";
     }
     // Convert cmd to string or null if unknown
     static String cmdToString(int cmd) {
@@ -1651,7 +1648,7 @@ public class DataConnection extends StateMachine {
                                 msg.arg1, SocketKeepalive.ERROR_INVALID_NETWORK);
                     }
                     break;
-                case EVENT_RETRY_CONNECTION:
+                case EVENT_NR_STATE_CHANGED:
                     if (DBG) {
                         String s = "DcDefaultState ignore EVENT_RETRY_CONNECTION"
                                 + " tag=" + msg.arg1 + ":mTag=" + mTag;
@@ -1857,7 +1854,7 @@ public class DataConnection extends StateMachine {
                     if (DBG) log("DcInactiveState: msg.what=EVENT_DISCONNECT_ALL");
                     notifyDisconnectCompleted((DisconnectParams)msg.obj, false);
                     return HANDLED;
-                case EVENT_RETRY_CONNECTION:
+                case EVENT_NR_STATE_CHANGED:
                     if (DBG) {
                         log("DcInactiveState: msg.what=EVENT_RETRY_CONNECTION"
                                 + " mConnectionParams=" + mConnectionParams);
